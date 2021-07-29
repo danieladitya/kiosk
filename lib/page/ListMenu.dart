@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiosk/constant/constant.dart';
 import 'package:kiosk/page/Home.dart';
 import 'package:kiosk/page/Information/InformationMenu.dart';
 
@@ -38,6 +39,10 @@ class _ListMenuPageState extends State<ListMenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    return OldMenuList(context);
+  }
+
+  Widget OldMenuList(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade400,
       body: Center(

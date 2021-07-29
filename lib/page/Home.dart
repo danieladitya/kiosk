@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:kiosk/constant/constan_style.dart';
 import 'package:kiosk/constant/constant.dart';
+import 'package:kiosk/page/Appointment/GetMedicalNumber.dart';
 import 'package:kiosk/page/PrintAppointment.dart';
 import 'package:kiosk/widget/CustomeElevation.dart';
 import 'package:kiosk/widget/iConMenu.dart';
@@ -125,7 +126,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                     child: ElevatedButton(
                                       child: iConMenu("Buat Perjanjian",
                                           Icons.calendar_today_outlined),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    GetMedicalNumber()));
+                                      },
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all<Color>(
