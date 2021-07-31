@@ -24,7 +24,7 @@ class _iConMenuState extends State<iConMenu> {
                 children: [
                   Icon(
                     widget.icons,
-                    color: Colors.black,
+                    color: Colors.white,
                     size: 40.0,
                   ),
                   SizedBox(
@@ -32,7 +32,7 @@ class _iConMenuState extends State<iConMenu> {
                   ),
                   Text(
                     widget.title,
-                    style: TextStyle(fontSize: 12, color: Colors.black),
+                    style: TextStyle(fontSize: 12, color: Colors.white70),
                   ),
                 ],
               )),

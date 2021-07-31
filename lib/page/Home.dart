@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:kiosk/constant/constan_style.dart';
 import 'package:kiosk/constant/constant.dart';
+import 'package:kiosk/constant/constant_style.dart';
 import 'package:kiosk/page/Appointment/GetMedicalNumber.dart';
 import 'package:kiosk/page/PrintAppointment.dart';
+import 'package:kiosk/page/Walkin.dart';
 import 'package:kiosk/widget/CustomeElevation.dart';
 import 'package:kiosk/widget/iConMenu.dart';
 
@@ -71,10 +72,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             ));
                           },
                           autoplay: true,
-                          layout: SwiperLayout.DEFAULT,
                           itemCount: 3,
                           pagination: new SwiperPagination(),
-                          control: new SwiperControl(),
+                          viewportFraction: 0.8,
+                          scale: 0.9,
                         ),
                       ),
                       SizedBox(
@@ -102,21 +103,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                   CustomElevation(
                                     height: 110,
                                     child: ElevatedButton(
-                                      child: iConMenu("Kedatangan",
-                                          Icons.directions_walk_outlined),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (contex) =>
-                                                    PrintAppointment()));
-                                      },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                mBackgroundColor),
-                                      ),
-                                    ),
+                                        child: iConMenu("Kedatangan",
+                                            Icons.directions_walk_outlined),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (contex) =>
+                                                      Walkin()));
+                                        },
+                                        style: mButtonStyle),
                                   ),
                                   SizedBox(
                                     width: 10,
@@ -133,11 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 builder: (context) =>
                                                     GetMedicalNumber()));
                                       },
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                mBackgroundColor),
-                                      ),
+                                      style: mButtonStyle,
                                     ),
                                   )
                                 ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiosk/page/ListMenu.dart';
+import 'package:kiosk/page/Home.dart';
 
 void main() {
-  runApp(ListMenu());
+  runApp(Home());
 }
