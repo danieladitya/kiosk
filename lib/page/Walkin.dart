@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:kiosk/constant/constant_style.dart';
 import 'package:kiosk/constant/constant.dart';
+import 'package:kiosk/models/Appointment.dart';
+import 'package:kiosk/models/Response.dart';
 import 'package:kiosk/page/AppointmentDetail.dart';
+import 'package:http/http.dart' as http;
 
 class Walkin extends StatefulWidget {
   @override
@@ -12,7 +17,12 @@ class _WalkinState extends State<Walkin> {
   bool isVisibleFormAppointment = false;
   bool isVisibleFormMrn = false;
   bool isVisibleConfirm = true;
+  String messageText;
+  TextEditingController _txtAppointmentNo = TextEditingController();
+  TextEditingController _txtMedicalNo = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  ResponseAppointment reqApm = null;
 
   void showFormAppointment() {
     setState(() {
@@ -124,11 +134,13 @@ class _WalkinState extends State<Walkin> {
                                   child: Column(
                                     children: <Widget>[
                                       Text(
-                                        "Silahkan Masukan Nomor Perjanjian Anda",
+                                        "Silahkan Masukan Nomor Perjanjian Anda Hari Ini",
                                       ),
                                       Container(
                                         width: 400,
                                         child: TextFormField(
+                                          controller: _txtAppointmentNo,
+                                          keyboardType: TextInputType.text,
                                           // The validator receives the text that the user has entered.
                                           validator: (value) {
                                             if (value == null ||
@@ -151,16 +163,34 @@ class _WalkinState extends State<Walkin> {
                                               // If the form is valid, display a snackbar. In the real world,
                                               // you'd often call a server or save the information in a database.
 
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                          'Processing Success')));
+                                              ResponseAppointment.getApointment(
+                                                      _txtAppointmentNo.text)
+                                                  .then((value) {
+                                                reqApm = value;
+                                                setState(() {
+                                                  reqApm = value;
+                                                });
 
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (contex) =>
-                                                          AppointmentDetail()));
+                                                if (reqApm.Status == "200") {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              "Berhasil diproses")));
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (contex) =>
+                                                              AppointmentDetail(
+                                                                data:
+                                                                    reqApm.Data,
+                                                              )));
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              "Gagal diproses")));
+                                                }
+                                              });
                                             }
                                           },
                                           child: Text(
@@ -192,6 +222,8 @@ class _WalkinState extends State<Walkin> {
                                       Container(
                                         width: 400,
                                         child: TextFormField(
+                                          controller: _txtMedicalNo,
+                                          keyboardType: TextInputType.text,
                                           // The validator receives the text that the user has entered.
                                           validator: (value) {
                                             if (value == null ||

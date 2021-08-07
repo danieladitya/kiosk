@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kiosk/constant/constant.dart';
+import 'package:kiosk/constant/constant_style.dart';
+import 'package:kiosk/models/Appointment.dart';
 import 'package:kiosk/page/Home.dart';
 import 'package:kiosk/widget/iConMenu.dart';
 
 class AppointmentDetail extends StatefulWidget {
+  final AppointmentData data;
+  AppointmentDetail({this.data});
   @override
   _AppointmentDetailState createState() => _AppointmentDetailState();
 }
@@ -11,14 +15,18 @@ class AppointmentDetail extends StatefulWidget {
 class _AppointmentDetailState extends State<AppointmentDetail> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        backgroundColor: mBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: mBackgroundColor,
-          elevation: 0,
+    return Scaffold(
+      backgroundColor: mBackgroundColor,
+      appBar: AppBar(
+        title: new Text(
+          "Data Kunjungan",
+          style: TextStyle(color: Colors.white),
         ),
-        body: SafeArea(
+        backgroundColor: Colors.blue.shade900,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: SafeArea(
           child: Container(
               width: double.infinity,
               color: mBackgroundColor,
@@ -57,7 +65,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                                       width: 300,
                                       padding: EdgeInsets.all(5),
                                       alignment: Alignment.centerLeft,
-                                      child: Text('Daniel aditya andaru putra'))
+                                      child: Text(widget.data.PatientName))
                                 ]),
                               ]),
                               TableRow(children: [
@@ -85,7 +93,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                                       width: 300,
                                       padding: EdgeInsets.all(5),
                                       alignment: Alignment.centerLeft,
-                                      child: Text('dr. Prayoga gusti murai'))
+                                      child: Text(widget.data.ParamedicName))
                                 ]),
                               ]),
                               TableRow(children: [
@@ -99,7 +107,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                                       width: 300,
                                       padding: EdgeInsets.all(5),
                                       alignment: Alignment.centerLeft,
-                                      child: Text('20 Juni 2021'))
+                                      child: Text(widget.data.StartDate))
                                 ]),
                               ]),
                               TableRow(children: [
@@ -113,7 +121,7 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                                       width: 300,
                                       padding: EdgeInsets.all(5),
                                       alignment: Alignment.centerLeft,
-                                      child: Text('09:00'))
+                                      child: Text(widget.data.StartTime))
                                 ]),
                               ]),
                               TableRow(children: [
@@ -127,7 +135,8 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                                       width: 400,
                                       padding: EdgeInsets.all(5),
                                       alignment: Alignment.centerLeft,
-                                      child: Text('10'))
+                                      child:
+                                          Text(widget.data.QueueNo.toString()))
                                 ]),
                               ]),
                             ],
@@ -141,29 +150,24 @@ class _AppointmentDetailState extends State<AppointmentDetail> {
                             child: Row(
                               children: [
                                 ElevatedButton(
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.print_rounded),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                          child:
-                                              Text("Cetak Bukti Kedatangan")),
-                                    ],
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (_) => MyHomePage()),
-                                    );
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            mBackgroundColor),
-                                  ),
-                                ),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.print_rounded),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                            child:
+                                                Text("Cetak Bukti Kedatangan")),
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) => MyHomePage()),
+                                      );
+                                    },
+                                    style: mButtonStyle),
                               ],
                             )),
                       ],
