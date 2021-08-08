@@ -14,3 +14,8 @@ const mCardSubtitleColor = mTitleColor;
 class Constant {
   static const uRLApi = "http://localhost/kioskapi/api";
 }
+
+class ApiStatus {
+  static const SUCCESS = "200";
+  static const NOTFOUND = "404";
+}

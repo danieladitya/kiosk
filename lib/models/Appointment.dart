@@ -118,13 +118,15 @@ class AppointmentData {
 
   factory AppointmentData.assign(Map<String, dynamic> obj) {
     return AppointmentData(
-        AppointmentID: obj["AppointmentID"] as int,
-        AppointmentNo: obj["AppointmentNo"] as String,
-        PatientName: obj["PatientName"] as String,
-        ParamedicName: obj["ParamedicName"] as String,
-        StartDate: obj["StartDate"] as String,
-        StartTime: obj["StartTime"] as String,
-        QueueNo: obj["QueueNo"] as int);
+      AppointmentID: obj != null ? obj["AppointmentID"] as int : 0,
+      AppointmentNo: obj != null ? obj["AppointmentNo"] as String : "",
+      PatientName: obj != null ? obj["PatientName"] as String : "aaa",
+      ParamedicName: obj != null ? obj["ParamedicName"] as String : "",
+      StartDate: obj != null ? obj["StartDate"] as String : "",
+      StartTime: obj != null ? obj["StartTime"] as String : "",
+      QueueNo: obj != null ? obj["QueueNo"] as int : 0,
+    );
+    ;
   }
 }
 
@@ -135,10 +137,17 @@ class ResponseAppointment {
   ResponseAppointment({this.Status, this.Remarks, this.Data});
 
   factory ResponseAppointment.assign(Map<String, dynamic> obj) {
+    AppointmentData dataApm;
+    String data = jsonEncode(dataApm);
+
+    if (obj["Status"] == "200") {
+      data = obj["Data"];
+    }
+
     return ResponseAppointment(
         Status: obj["Status"],
         Remarks: obj["Remarks"],
-        Data: AppointmentData.assign(jsonDecode(obj["Data"])));
+        Data: AppointmentData.assign(jsonDecode(data)));
   }
 
   static Future<ResponseAppointment> getApointment(String AppointmentNo) async {
@@ -148,7 +157,6 @@ class ResponseAppointment {
     var result = await http.get(Uri.parse(endpoint));
     var jObject = json.decode(result.body);
     var userData = (jObject as Map<String, dynamic>);
-
     return ResponseAppointment.assign(userData);
   }
 }
